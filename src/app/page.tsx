@@ -35,7 +35,6 @@ export default function Home() {
   spotifyApi.setAccessToken(session?.accessToken as string);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
     const interval = setInterval(() => {
       if (session?.accessToken && !tracksSet ) {
         spotifyApi.getMyCurrentPlayingTrack()
@@ -54,7 +53,7 @@ export default function Home() {
 
     return () => clearInterval(interval);
   }
-}, [session]);
+  , [session]);
   
     return (
       session ? 
@@ -93,7 +92,19 @@ export default function Home() {
       <div>
         
 
-      {signIn()}
+        <div className="relative flex flex-col h-screen w-full bg-cover bg-center bg-no-repeat overflow-hidden">
+  
+  <div className="relative flex-grow flex items-center justify-center z-10">
+    <div className="text-center text-white max-w-2xl px-4">
+      <blockquote className="text-3xl text-[color:white] font-bold mb-4">
+        <button onClick={() => signIn()}>Sign in</button>
+      </blockquote>
+
+    </div>
+  </div>
+  
+
+</div>
 
 
       </div>
