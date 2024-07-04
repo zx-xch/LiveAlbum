@@ -19,11 +19,8 @@ export default function Home() {
   const { data: sessionData, status } = useSession();
   const [session, setSession] = useState(sessionData);
 
-  const [topTracks, setTopTracks] = useState<any | null>(null)
+  const [currentTrack, setCurrentTrack] = useState<any | null>(null)
   const [tracksSet, setTracksSet] = useState(false)
-
-  const [trackInt, setTrackInt] = useState(3)
-  const [trackLyrics, setTrackLyrics] = useState('')
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -34,32 +31,29 @@ export default function Home() {
     fetchSession();
   }, []);
 
-  function getRandomInt(max: any) {
-    return Math.floor(Math.random() * max);
-  }
 
   spotifyApi.setAccessToken(session?.accessToken as string);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (session?.accessToken && !tracksSet ) {
+        spotifyApi.getMyCurrentPlayingTrack()
+.then(function(data) {
+
+      let currentTrack = data.body.item;
+      setCurrentTrack(currentTrack);
+      setTracksSet(true)
+      console.log(currentTrack)
+
+    }, function(err) {
+      console.log('Something went wrong!', err);
+    });
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [session]);
   
-      useEffect(() => {
-        if (!tracksSet) {
-          spotifyApi.getMySavedTracks({
-            limit: 50,
-            offset: getRandomInt(60)
-          })
-      .then(function(data) {
-  
-        let topTracks = data.body.items;
-        setTopTracks(topTracks);
-        setTracksSet(true)
-        console.log(topTracks)
-  
-        setTrackInt(getRandomInt(50))
-  
-      }, function(err) {
-        console.log('Something went wrong!', err);
-      });
-        }
-      }, [session])
 
       /* useEffect(() => {
         if (topTracks && trackInt !== null) {
@@ -80,8 +74,8 @@ export default function Home() {
       <div className="relative flex flex-col h-screen w-full bg-cover bg-center bg-no-repeat overflow-hidden">
   <div className="absolute inset-0">
     <Image 
-      src={topTracks ? topTracks[trackInt]?.track?.album?.images[0]?.url : 'https://i.scdn.co/image/ab6761610000e5ebd77c094a3b11b8cebad34ff4'} 
-      className="h-full w-full object-cover opacity-50"
+      src={currentTrack ? currentTrack?.album?.images[0]?.url : 'https://i.scdn.co/image/ab6761610000e5ebd77c094a3b11b8cebad34ff4'} 
+      className="h-full w-full object-cover opacity-50 blur-sm"
       alt="" 
       layout="fill"
     />
@@ -90,21 +84,18 @@ export default function Home() {
   <div className="relative flex-grow flex items-center justify-center z-10">
     <div className="text-center text-white max-w-2xl px-4">
       <blockquote className="text-3xl text-[color:white] font-bold mb-4">
-        {topTracks && topTracks[trackInt]?.track?.name}
+        {currentTrack && currentTrack?.name}
       </blockquote>
       <div className="text-lg text-[color:white]">
         <p className="mb-2 text-[color:white]">
-          {topTracks && topTracks[trackInt]?.track?.artists[0]?.name}
+          {currentTrack && currentTrack?.artists[0]?.name}
         </p>
       </div>
     </div>
   </div>
   
   <div className="relative z-10 flex justify-center p-4 bg-black bg-opacity-30">
-    <button className="text-xs text-[color:white] mr-2" onClick={() => window.location.reload()}>
-      Change track
-    </button>
-    <button className="text-xs text-[color:white] ml-2" onClick={() => signOut()}>
+    <button className="text-xs text-[color:white]" onClick={() => signOut()}>
       Sign Out
     </button>
   </div>
@@ -112,8 +103,16 @@ export default function Home() {
       :
 
       <div>
-        <button onClick={() => signIn()} className="text-[color:white]"> Sign in </button>
+        <div className="relative flex-grow flex items-center justify-center z-10">
+    <div className="text-center text-white max-w-2xl px-4">
+      <blockquote className="text-3xl text-[color:white] font-bold mb-4">
+      <button onClick={() => signIn()} className="text-[color:white]"> Sign in </button>
+      </blockquote>
+
+    </div>
+  </div>
       </div>
+      
     )
 
   }
