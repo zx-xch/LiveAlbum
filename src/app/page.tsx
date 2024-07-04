@@ -35,6 +35,7 @@ export default function Home() {
   spotifyApi.setAccessToken(session?.accessToken as string);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
     const interval = setInterval(() => {
       if (session?.accessToken && !tracksSet ) {
         spotifyApi.getMyCurrentPlayingTrack()
@@ -52,7 +53,8 @@ export default function Home() {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [session]);
+  }
+}, [session]);
   
     return (
       session ? 
