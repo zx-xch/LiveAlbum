@@ -54,20 +54,6 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [session]);
   
-
-      /* useEffect(() => {
-        if (topTracks && trackInt !== null) {
-          fetch(topTracks && `https://lyrist.vercel.app/api/${topTracks[trackInt]?.name}/${topTracks[trackInt]?.artists[0]?.name}`)
-          .then(response => response.json())
-          .then(data => { 
-            console.log(data)
-            setTrackLyrics(data['lyrics'])}
-        )
-  .catch(error => console.error('Error:', error));
-        }
-      }, [topTracks, trackInt]) */
-
-
     return (
       session ? 
 
