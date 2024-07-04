@@ -63,19 +63,22 @@ export default function Home() {
   <div className="absolute inset-0">
     <Image 
       src={currentTrack ? currentTrack?.album?.images[0]?.url : 'https://i.scdn.co/image/ab6761610000e5ebd77c094a3b11b8cebad34ff4'} 
-      className="h-full w-full object-cover opacity-50 blur-sm"
+      className="h-full w-full object-cover opacity-75 blur-md"
       alt="" 
       layout="fill"
     />
   </div>
   
-  <div className="relative flex-grow flex items-center justify-center z-10">
-    <div className="text-center text-white max-w-2xl px-4">
+  <div className="relative flex-grow flex items-center justify-center z-10 ">
+    
+  <div className="text-center text-white max-w-2xl px-4 drop-shadow-2xl flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat" style={{ width: "350px", height: "350px", backgroundImage: `url(${currentTrack ? currentTrack?.album?.images[0]?.url : 'https://i.scdn.co/image/ab6761610000e5ebd77c094a3b11b8cebad34ff4'})` }}>
       <blockquote className="text-3xl text-[color:white] font-bold mb-4">
+        Current Track
         {currentTrack && currentTrack?.name}
       </blockquote>
       <div className="text-lg text-[color:white]">
         <p className="mb-2 text-[color:white]">
+          Artist
           {currentTrack && currentTrack?.artists[0]?.name}
         </p>
       </div>
@@ -87,14 +90,13 @@ export default function Home() {
       Sign Out
     </button>
   </div>
+  
 </div>
-      :
+
+:
 
       <div>
-        
-
         <div className="relative flex flex-col h-screen w-full bg-cover bg-center bg-no-repeat overflow-hidden">
-  
   <div className="relative flex-grow flex items-center justify-center z-10">
     <div className="text-center text-white max-w-2xl px-4">
       <blockquote className="text-3xl text-[color:white] font-bold mb-4">
@@ -103,13 +105,8 @@ export default function Home() {
 
     </div>
   </div>
-  
-
 </div>
-
-
-      </div>
-      
+      </div>    
     )
 
   }
