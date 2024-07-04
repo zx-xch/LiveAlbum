@@ -14,6 +14,7 @@ var spotifyApi = new SpotifyWebApi({
   redirectUri: 'https://live-album.vercel.app/api/auth/callback/spotify'
 });
 
+
 export default function Home() {
 
   const { data: sessionData, status } = useSession();
