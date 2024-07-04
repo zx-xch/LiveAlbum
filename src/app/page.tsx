@@ -50,7 +50,7 @@ export default function Home() {
       console.log('Something went wrong!', err);
     });
       }
-    }, 5000);
+    }, 1500);
 
     return () => clearInterval(interval);
   }
