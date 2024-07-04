@@ -103,14 +103,11 @@ export default function Home() {
       :
 
       <div>
-        <div className="relative flex-grow flex items-center justify-center z-10">
-    <div className="text-center text-white max-w-2xl px-4">
-      <blockquote className="text-3xl text-[color:white] font-bold mb-4">
-      <button onClick={() => signIn()} className="text-[color:white]"> Sign in </button>
-      </blockquote>
+        
 
-    </div>
-  </div>
+      {signIn()}
+
+
       </div>
       
     )
