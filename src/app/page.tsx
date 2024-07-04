@@ -72,11 +72,11 @@ export default function Home() {
   <div className="relative flex-grow flex items-center justify-center z-10 ">
     
   <div className="text-center text-white max-w-2xl px-4 drop-shadow-2xl flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat" style={{ width: "350px", height: "350px", backgroundImage: `url(${currentTrack ? currentTrack?.album?.images[0]?.url : 'https://i.scdn.co/image/ab6761610000e5ebd77c094a3b11b8cebad34ff4'})` }}>
-      <blockquote className="text-3xl text-[color:white] font-bold mb-4">
+      <blockquote className="text-3xl text-[color:white] font-bold mb-4 drop-shadow-lg">
         {currentTrack && currentTrack?.name}
       </blockquote>
       <div className="text-lg text-[color:white]">
-        <p className="mb-2 text-[color:white]">
+        <p className="mb-2 text-[color:white] drop-shadow-lg">
           {currentTrack && currentTrack?.artists[0]?.name}
         </p>
       </div>
